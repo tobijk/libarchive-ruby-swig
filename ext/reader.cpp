@@ -2,18 +2,18 @@
 #include <archive.h>
 #include <archive_entry.h>
 #include <ruby.h>
-#include "carchive.h"
-#include "carchiveentry.h"
-#include "carchiveerror.h"
+#include "reader.h"
+#include "entry.h"
+#include "error.h"
 
-Archive::Archive(struct archive *ar)
+Reader::Reader(struct archive *ar)
     : _ar(ar),
     _buf((char*) malloc(1024)),
     _buf_size(1024)
 {}
 
 
-Archive::~Archive()
+Reader::~Reader()
 {
     this->close();
     free(_buf);
@@ -22,7 +22,7 @@ Archive::~Archive()
 }
 
 
-void Archive::close()
+void Reader::close()
 {
     if(_ar) {
         archive_read_finish(_ar);
@@ -31,7 +31,7 @@ void Archive::close()
 }
 
 
-Archive *Archive::read_open_filename_helper(const char * filename) 
+Reader *Reader::read_open_filename(const char * filename) 
 {
     struct archive *ar = archive_read_new();
 
@@ -48,20 +48,20 @@ Archive *Archive::read_open_filename_helper(const char * filename)
     } catch(...) {
         std::string error_msg = archive_error_string(ar);
         archive_read_finish(ar);
-        throw ArchiveError(error_msg);
+        throw Error(error_msg);
     }
 
-    return new Archive(ar);
+    return new Reader(ar);
 }
 
 
-ArchiveEntry *Archive::next_header()
+Entry *Reader::next_header()
 {
-    ArchiveEntry * result = 0;
+    Entry * result = 0;
     std::string error_msg = "operation on uninitialized archive";
 
     if(!_ar)
-        throw ArchiveError(error_msg);
+        throw Error(error_msg);
 
     struct archive_entry *entry = archive_entry_new();
     int rval = archive_read_next_header2(_ar, entry);
@@ -72,19 +72,19 @@ ArchiveEntry *Archive::next_header()
             close();
             break;
         case ARCHIVE_OK:
-            result = new ArchiveEntry(entry);
+            result = new Entry(entry);
             break;
         default:
             archive_entry_free(entry);
             error_msg = archive_error_string(_ar);
-            throw ArchiveError(error_msg);
+            throw Error(error_msg);
     }
 
     return result;
 }
 
 
-VALUE Archive::read_data_helper(int len)
+VALUE Reader::read_data_helper(int len)
 {
     std::string error_msg = "error while reading from archive";
 
@@ -100,7 +100,7 @@ VALUE Archive::read_data_helper(int len)
         case ARCHIVE_WARN:
         case ARCHIVE_RETRY:
             error_msg = archive_error_string(_ar);
-            throw ArchiveError(error_msg);
+            throw Error(error_msg);
         case 0:
             return 0;
     }

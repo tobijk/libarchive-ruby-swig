@@ -3,11 +3,11 @@
 
 struct archive_entry;
 
-class ArchiveEntry
+class Entry
 {
     public:
-        ArchiveEntry(struct archive_entry *entry);
-        virtual ~ArchiveEntry();
+        Entry(struct archive_entry *entry);
+        virtual ~Entry();
         const char *pathname();
         const char *symlink();
         bool is_directory();

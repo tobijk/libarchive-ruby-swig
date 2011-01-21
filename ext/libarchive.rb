@@ -1,24 +1,36 @@
 require 'libarchive_swig'
 
-include Libarchive_swig
+module Archive
 
-class ArchiveEntry
+  include Libarchive_swig
 
-  alias :directory? :is_directory
-  alias :symbolic_link? :is_symbolic_link
-  alias :block_special? :is_block_special
-  alias :character_special? :is_character_special
-  alias :fifo? :is_fifo
-  alias :socket? :is_socket
+  class Libarchive_swig::Entry
+    alias :directory? :is_directory
+    alias :symbolic_link? :is_symbolic_link
+    alias :block_special? :is_block_special
+    alias :character_special? :is_character_special
+    alias :fifo? :is_fifo
+    alias :socket? :is_socket
+  end
 
-end
-
-
-class Archive
+  class Libarchive_swig::Reader
+ 
+    def read_data(size)
+      if block_given?
+        while result = self.read_data_helper(size)
+          yield result
+        end
+      else
+        return self.read_data_helper(size)
+      end
+    end
+ 
+    private_class_method :new
+  end
 
   def self.read_open_filename(filename)
-    ar = Archive.read_open_filename_helper(filename)
-
+    ar = Reader.read_open_filename(filename)
+ 
     if block_given?
       yield ar
     else
@@ -26,15 +38,4 @@ class Archive
     end
   end
 
-  def read_data(size)
-    if block_given?
-      while result = self.read_data_helper(size)
-        yield result
-      end
-    else
-      return self.read_data_helper(size)
-    end
-  end
-
-  private_class_method :new
 end

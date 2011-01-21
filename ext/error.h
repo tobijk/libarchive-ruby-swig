@@ -3,14 +3,14 @@
 
 #include <exception>
 
-class ArchiveError: public std::exception
+class Error: public std::exception
 {
     public:
 
-        ArchiveError(const std::string &error_msg)
+        Error(const std::string &error_msg)
             : error_msg(error_msg) {};
 
-        virtual ~ArchiveError() throw()
+        virtual ~Error() throw()
             {};
 
         virtual const char *what() const throw() {
