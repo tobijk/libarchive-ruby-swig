@@ -1,5 +1,5 @@
-#ifndef CLASS_ARCHIVE_H_INCLUDED
-#define CLASS_ARCHIVE_H_INCLUDED
+#ifndef CLASS_ARCHIVE_READER_H_INCLUDED
+#define CLASS_ARCHIVE_READER_H_INCLUDED
 
 struct archive;
 class Entry;
@@ -21,7 +21,8 @@ class Reader
         $action
     } catch(Error &err) {
         static VALUE c_archive = rb_define_module("Archive");
-        static VALUE e_archive = rb_define_class_under(c_archive, "Error", rb_eStandardError);
+        static VALUE e_archive =
+            rb_define_class_under(c_archive, "Error", rb_eStandardError);
         rb_raise(e_archive, err.what());
     }
 }
