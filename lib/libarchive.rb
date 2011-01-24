@@ -11,6 +11,8 @@ module Archive
     alias :character_special? :is_character_special
     alias :fifo? :is_fifo
     alias :socket? :is_socket
+
+    private_class_method :new
   end
 
   class Libarchive_swig::Reader
