@@ -5,10 +5,12 @@
 #include <archive_entry.h>
 #include <ruby.h>
 #include "reader.h"
+#include "writer.h"
 #include "entry.h"
 #include "error.h"
 %}
 
 %include "reader.h"
+%include "writer.h"
 %include "entry.h"
 

@@ -15,5 +15,7 @@ Gem::Specification.new do |s|
     "ext/libarchive-ruby-swig/error.h",
     "ext/libarchive-ruby-swig/libarchive_swig.i",
     "ext/libarchive-ruby-swig/reader.cpp",
-    "ext/libarchive-ruby-swig/reader.h" ]
+    "ext/libarchive-ruby-swig/reader.h",
+    "ext/libarchive-ruby-swig/writer.cpp",
+    "ext/libarchive-ruby-swig/writer.h" ]
 end
