@@ -1,0 +1,8 @@
+= Changelog for Libarchive/Ruby/SWIG
+
+== 30 Jan 2011 - 19:23:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
+
+* Initial release
+* Basic support for reading and writing compressed archives 
+* Interface-compatible to libarchive-ruby
+
