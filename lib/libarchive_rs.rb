@@ -8,13 +8,11 @@
 # license text can be found in the file LICENSE.txt distributed with the source.
 #
 
-require 'libarchive_swig'
+require 'archive.so'
 
 module Archive
 
-  include Libarchive_swig
-
-  class Libarchive_swig::Entry
+  class Entry
     alias :directory? :is_directory
     alias :symbolic_link? :is_symbolic_link
     alias :block_special? :is_block_special
@@ -45,7 +43,7 @@ module Archive
     private_class_method :new
   end
 
-  class Libarchive_swig::Reader
+  class Reader
  
     def read_data(size)
       if block_given?
@@ -60,7 +58,7 @@ module Archive
     private_class_method :new
   end
 
-  class Libarchive_swig::Writer
+  class Writer
 
     def new_entry()
       entry = self.new_entry_helper
@@ -81,6 +79,7 @@ module Archive
       end
     end
 
+    private_class_method :new
   end
 
   def self.read_open_filename(filename)
@@ -106,3 +105,4 @@ module Archive
   end
 
 end
+

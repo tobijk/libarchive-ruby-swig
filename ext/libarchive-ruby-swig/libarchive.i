@@ -8,7 +8,7 @@
  license text can be found in the file LICENSE.txt distributed with the source.
 */
 
-%module libarchive_swig
+%module archive
 
 %{
 #include <archive.h>
@@ -18,6 +18,10 @@
 #include "writer.h"
 #include "entry.h"
 #include "error.h"
+%}
+
+%wrapper %{
+/* --- WRAPPER CODE START --- */
 %}
 
 %include "reader.h"
