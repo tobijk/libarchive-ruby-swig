@@ -34,6 +34,11 @@ Entry::~Entry()
     }
 }
 
+bool Entry::is_file()
+{
+    return S_ISREG(archive_entry_filetype(_entry));
+}
+
 bool Entry::is_directory()
 {
     return S_ISDIR(archive_entry_filetype(_entry));
@@ -259,10 +264,10 @@ void Entry::set_uname(const char *uname)
     archive_entry_copy_uname(_entry, uname);
 }
 
-void Entry::copy_stat(const char *filename)
+void Entry::copy_stat_helper(const char *filename)
 {
     struct stat sb;
-    if(stat(filename, &sb) == -1) {
+    if(lstat(filename, &sb) == -1) {
         std::string error_msg = strerror(errno);
         throw Error(error_msg);
     }

@@ -8,11 +8,12 @@
 # license text can be found in the file LICENSE.txt distributed with the source.
 #
 
-require 'archive.so'
+require 'archive'
 
 module Archive
 
   class Entry
+    alias :file? :is_file
     alias :directory? :is_directory
     alias :symbolic_link? :is_symbolic_link
     alias :block_special? :is_block_special
@@ -39,6 +40,11 @@ module Archive
     alias :symlink= :set_symlink
     alias :uid= :set_uid
     alias :uname= :set_uname
+
+    def copy_stat(path)
+      copy_stat_helper(path)
+      self.set_symlink(File.readlink(path)) if self.symbolic_link?
+    end
 
     private_class_method :new
   end

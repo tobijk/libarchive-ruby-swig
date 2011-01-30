@@ -23,6 +23,7 @@ class Entry
         Entry(struct archive_entry *entry);
         virtual ~Entry();
 
+        bool is_file();
         bool is_directory();
         bool is_symbolic_link();
         bool is_block_special();
@@ -107,7 +108,7 @@ class Entry
 }
 #endif
 
-        void copy_stat(const char *filename);
+        void copy_stat_helper(const char *filename);
 
 #ifdef SWIG
 %exception;
