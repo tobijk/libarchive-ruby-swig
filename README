@@ -17,7 +17,7 @@ Install the gem
 
 or clone the git source repository
 
- git clone git://rubyforge.org/libarchive-rs.git
+ git clone git://github.com/tobijk/libarchive-ruby-swig.git
 
 and then build and install
 
