@@ -69,8 +69,13 @@ class Writer
 
 #ifdef SWIG
 %newobject write_open_filename(const char *filename,
+    const char *cmd, int format);
+%newobject write_open_filename(const char *filename,
     int compression, int format);
 #endif
+
+        static Writer *write_open_filename(const char *filename,
+            const char *cmd, int format);
 
         static Writer *write_open_filename(const char *filename,
             int compression, int format);
@@ -94,6 +99,8 @@ class Writer
         Entry *new_entry_helper();
 
     private:
+        static void set_format_helper(struct archive *ar, int format);
+
         struct archive *_ar;
         char *_buf;
         int _buf_size;

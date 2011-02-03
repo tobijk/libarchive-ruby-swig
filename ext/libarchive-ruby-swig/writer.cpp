@@ -42,6 +42,31 @@ void Writer::close()
 
 
 Writer *Writer::write_open_filename(const char *filename,
+    const char *cmd, int format)
+
+{
+    std::string error_msg;
+    struct archive *ar = archive_write_new();
+
+    archive_write_set_compression_program(ar, cmd);
+    try {
+        set_format_helper(ar, format);
+
+        if(archive_write_open_filename(ar, filename) != ARCHIVE_OK) {
+            error_msg = archive_error_string(ar);
+            throw Error(error_msg);
+        }
+
+    } catch(...) {
+        archive_write_finish(ar);
+        throw;
+    }
+
+    return new Writer(ar);
+}
+
+
+Writer *Writer::write_open_filename(const char *filename,
     int compression, int format)
 {
     std::string error_msg;
@@ -73,36 +98,7 @@ Writer *Writer::write_open_filename(const char *filename,
                 throw Error(error_msg);
         }
 
-        switch(format) {
-            case Archive::FORMAT_AR_BSD:
-                archive_write_set_format_ar_bsd(ar);
-                break;
-            case Archive::FORMAT_AR_SVR4:
-                archive_write_set_format_ar_svr4(ar);
-                break;
-            case Archive::FORMAT_CPIO:
-                archive_write_set_format_cpio(ar);
-                break;
-            case Archive::FORMAT_CPIO_NEWC:
-                archive_write_set_format_cpio_newc(ar);
-                break;
-            case Archive::FORMAT_MTREE:
-                archive_write_set_format_mtree(ar);
-                break;
-            case Archive::FORMAT_TAR:
-            case Archive::FORMAT_TAR_PAX_RESTRICTED:
-                archive_write_set_format_pax_restricted(ar);
-                break;
-            case Archive::FORMAT_TAR_PAX_INTERCHANGE:
-                archive_write_set_format_pax(ar);
-                break;
-            case Archive::FORMAT_TAR_USTAR:
-                archive_write_set_format_ustar(ar);
-                break;
-            default:
-                error_msg = "unknown or unsupported archive format";
-                throw Error(error_msg);
-        }
+        set_format_helper(ar, format);
 
         if(archive_write_open_filename(ar, filename) != ARCHIVE_OK) {
             error_msg = archive_error_string(ar);
@@ -123,6 +119,7 @@ Entry *Writer::new_entry_helper()
     return new Entry(archive_entry_new());
 }
 
+
 void Writer::write_header(Entry *entry)
 {
     if(archive_write_header(_ar, entry->_entry) != ARCHIVE_OK) {
@@ -131,11 +128,49 @@ void Writer::write_header(Entry *entry)
     }
 }
 
+
 void Writer::write_data_helper(const char *string, int length)
 {
     if(archive_write_data(_ar, (void*) string, length) == -1) {
         std::string error_msg = archive_error_string(_ar);
         throw Error(error_msg);
+    }
+}
+
+
+void Writer::set_format_helper(struct archive *ar, int format)
+{
+    std::string error_msg;
+
+    switch(format) {
+        case Archive::FORMAT_AR_BSD:
+            archive_write_set_format_ar_bsd(ar);
+            break;
+        case Archive::FORMAT_AR_SVR4:
+            archive_write_set_format_ar_svr4(ar);
+            break;
+        case Archive::FORMAT_CPIO:
+            archive_write_set_format_cpio(ar);
+            break;
+        case Archive::FORMAT_CPIO_NEWC:
+            archive_write_set_format_cpio_newc(ar);
+            break;
+        case Archive::FORMAT_MTREE:
+            archive_write_set_format_mtree(ar);
+            break;
+        case Archive::FORMAT_TAR:
+        case Archive::FORMAT_TAR_PAX_RESTRICTED:
+            archive_write_set_format_pax_restricted(ar);
+            break;
+        case Archive::FORMAT_TAR_PAX_INTERCHANGE:
+            archive_write_set_format_pax(ar);
+            break;
+        case Archive::FORMAT_TAR_USTAR:
+            archive_write_set_format_ustar(ar);
+            break;
+        default:
+            error_msg = "unknown or unsupported archive format";
+            throw Error(error_msg);
     }
 }
 
