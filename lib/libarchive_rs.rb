@@ -105,7 +105,7 @@ module Archive
   def self.write_open_filename(filename, compression, format)
     if compression.is_a? String
       if compression.index('/').nil?
-        ENV['PATH'].split(':').each do |path|
+        ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
           if File.executable?(path + '/' + compression)
             compression = path + '/' + compression
             break
