@@ -12,6 +12,9 @@ require 'archive'
 
 module Archive
 
+  class Error < StandardError
+  end
+
   class Entry
     alias :file? :is_file
     alias :directory? :is_directory
@@ -100,6 +103,21 @@ module Archive
   end
 
   def self.write_open_filename(filename, compression, format)
+    if compression.is_a? String
+      if compression.index('/').nil?
+        ENV['PATH'].split(':').each do |path|
+          if File.executable?(path + '/' + compression)
+            compression = path + '/' + compression
+            break
+          end
+        end
+      end
+
+      unless File.executable? compression
+        raise Error, "executable '#{compression}' not found."
+      end
+    end
+
     ar = Writer.write_open_filename(filename, compression, format)
 
     if block_given?
