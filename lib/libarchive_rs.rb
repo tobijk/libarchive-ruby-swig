@@ -102,6 +102,17 @@ module Archive
     end
   end
 
+  def self.read_open_memory(string)
+    ar = Reader.read_open_memory(string)
+
+    if block_given?
+      yield ar
+      ar.close()
+    else
+      return ar
+    end
+  end
+
   def self.write_open_filename(filename, compression, format)
     if compression.is_a? String
       if compression.index('/').nil?

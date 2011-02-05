@@ -24,6 +24,8 @@
 /* --- WRAPPER CODE START --- */
 %}
 
+%apply (char *STRING, int LENGTH) { (const char *string, int length) };
+
 %include "reader.h"
 %include "writer.h"
 %include "entry.h"

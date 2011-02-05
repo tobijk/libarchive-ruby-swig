@@ -82,10 +82,6 @@ class Writer
 
         void write_header(Entry *entry);
 
-#ifdef SWIG
-%apply (char *STRING, int LENGTH) { (const char *string, int length) };
-#endif
-
         void write_data_helper(const char *string, int length);
 
 #ifdef SWIG

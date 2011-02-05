@@ -40,10 +40,13 @@ class Reader
 
 #ifdef SWIG
 %newobject read_open_filename(const char *filename);
+%newobject read_open_memory(const char *string, int length);
 %newobject next_header();
 #endif
 
         static Reader *read_open_filename(const char *filename);
+        static Reader *read_open_memory(const char *string, int length);
+
         Entry *next_header();
         VALUE read_data_helper(int len);
 
@@ -54,6 +57,7 @@ class Reader
     private:
         struct archive *_ar;
         char *_buf;
+        char *_archive_content;
         int _buf_size;
 };
 

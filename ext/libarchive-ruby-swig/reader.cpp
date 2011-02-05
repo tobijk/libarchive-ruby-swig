@@ -19,7 +19,8 @@
 Reader::Reader(struct archive *ar)
     : _ar(ar),
     _buf((char*) malloc(1024)),
-    _buf_size(1024)
+    _buf_size(1024),
+    _archive_content(0)
 {}
 
 
@@ -38,10 +39,15 @@ void Reader::close()
         archive_read_finish(_ar);
         _ar = 0;
     }
+
+    if(_archive_content) {
+        free(_archive_content);
+        _archive_content = 0;
+    }
 }
 
 
-Reader *Reader::read_open_filename(const char * filename) 
+Reader *Reader::read_open_filename(const char *filename) 
 {
     struct archive *ar = archive_read_new();
 
@@ -62,6 +68,35 @@ Reader *Reader::read_open_filename(const char * filename)
     }
 
     return new Reader(ar);
+}
+
+
+Reader *Reader::read_open_memory(const char *string, int length)
+{
+    struct archive *ar = archive_read_new();
+    char *archive_content = (char*) malloc(length);
+    memcpy((void*) archive_content, (void*) string, length);
+
+    try {
+        if(archive_read_support_compression_all(ar) != ARCHIVE_OK)
+            throw 0;
+
+        if(archive_read_support_format_all(ar) != ARCHIVE_OK)
+            throw 0;
+
+        if(archive_read_open_memory(ar, (void*) archive_content, length) != ARCHIVE_OK)
+            throw 0;
+
+    } catch(...) {
+        std::string error_msg = archive_error_string(ar);
+        archive_read_finish(ar);
+        free(archive_content);
+        throw Error(error_msg);
+    }
+
+    Reader *reader_obj = new Reader(ar);
+    reader_obj->_archive_content = archive_content;
+    return reader_obj;
 }
 
 
