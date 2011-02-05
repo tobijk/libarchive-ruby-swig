@@ -1,5 +1,9 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 05 Feb 2011 - 23:04:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
+
+* add support for reading archive from memory
+
 == 05 Feb 2011 - 19:58:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
 
 * use File::PATH_SEPARATOR instead of platform-dependant ':'
