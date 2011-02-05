@@ -1,5 +1,11 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 05 Feb 2011 - 19:58:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
+
+* use File::PATH_SEPARATOR instead of platform-dependant ':'
+* raise error if external compression program is not in path
+* add support for using an external compression program
+
 == 30 Jan 2011 - 19:23:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
 
 * Initial release
