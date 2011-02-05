@@ -47,13 +47,18 @@ void Reader::close()
 }
 
 
-Reader *Reader::read_open_filename(const char *filename) 
+Reader *Reader::read_open_filename(const char *filename, const char *cmd) 
 {
     struct archive *ar = archive_read_new();
 
     try {
-        if(archive_read_support_compression_all(ar) != ARCHIVE_OK)
-            throw 0;
+        if(cmd) {
+            if(archive_read_support_compression_program(ar, cmd) != ARCHIVE_OK)
+                throw 0;
+        } else {
+            if(archive_read_support_compression_all(ar) != ARCHIVE_OK)
+                throw 0;
+        }
 
         if(archive_read_support_format_all(ar) != ARCHIVE_OK)
             throw 0;
@@ -71,31 +76,37 @@ Reader *Reader::read_open_filename(const char *filename)
 }
 
 
-Reader *Reader::read_open_memory(const char *string, int length)
+Reader *Reader::read_open_memory(const char *string, int length,
+    const char *cmd)
 {
     struct archive *ar = archive_read_new();
-    char *archive_content = (char*) malloc(length);
-    memcpy((void*) archive_content, (void*) string, length);
+    char *content = (char*) malloc(length);
+    memcpy((void*) content, (void*) string, length);
 
     try {
-        if(archive_read_support_compression_all(ar) != ARCHIVE_OK)
-            throw 0;
+        if(cmd) {
+            if(archive_read_support_compression_program(ar, cmd) != ARCHIVE_OK)
+                throw 0;
+        } else {
+            if(archive_read_support_compression_all(ar) != ARCHIVE_OK)
+                throw 0;
+        }
 
         if(archive_read_support_format_all(ar) != ARCHIVE_OK)
             throw 0;
 
-        if(archive_read_open_memory(ar, (void*) archive_content, length) != ARCHIVE_OK)
+        if(archive_read_open_memory(ar, (void*) content, length) != ARCHIVE_OK)
             throw 0;
 
     } catch(...) {
         std::string error_msg = archive_error_string(ar);
         archive_read_finish(ar);
-        free(archive_content);
+        free(content);
         throw Error(error_msg);
     }
 
     Reader *reader_obj = new Reader(ar);
-    reader_obj->_archive_content = archive_content;
+    reader_obj->_archive_content = content;
     return reader_obj;
 }
 

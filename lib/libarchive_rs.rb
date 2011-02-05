@@ -91,8 +91,12 @@ module Archive
     private_class_method :new
   end
 
-  def self.read_open_filename(filename)
-    ar = Reader.read_open_filename(filename)
+  def self.read_open_filename(filename, cmd = nil)
+    unless cmd.nil?
+      cmd = locate_cmd(cmd)
+    end
+
+    ar = Reader.read_open_filename(filename, cmd)
  
     if block_given?
       yield ar
@@ -102,8 +106,12 @@ module Archive
     end
   end
 
-  def self.read_open_memory(string)
-    ar = Reader.read_open_memory(string)
+  def self.read_open_memory(string, cmd = nil)
+    unless cmd.nil?
+      cmd = locate_cmd(cmd)
+    end
+
+    ar = Reader.read_open_memory(string, cmd)
 
     if block_given?
       yield ar
@@ -115,18 +123,7 @@ module Archive
 
   def self.write_open_filename(filename, compression, format)
     if compression.is_a? String
-      if compression.index('/').nil?
-        ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
-          if File.executable?(path + '/' + compression)
-            compression = path + '/' + compression
-            break
-          end
-        end
-      end
-
-      unless File.executable? compression
-        raise Error, "executable '#{compression}' not found."
-      end
+      compresion = locate_cmd(compression)
     end
 
     ar = Writer.write_open_filename(filename, compression, format)
@@ -137,6 +134,29 @@ module Archive
     else
       return ar
     end
+  end
+
+  private
+
+  def self.locate_cmd(cmd)
+    unless cmd.is_a? String
+      raise Error, "exepected String but found #{cmd.class}"
+    end
+
+    if cmd.index('/').nil?
+      ENV['PATH'].split(File::PATH_SEPARATOR).each do |path|
+        if File.executable?(path + '/' + cmd)
+          cmd = path + '/' + cmd
+          break
+        end
+      end
+    end
+
+    unless File.executable? cmd
+      raise Error, "executable '#{cmd}' not found"
+    end
+
+    return cmd
   end
 
 end

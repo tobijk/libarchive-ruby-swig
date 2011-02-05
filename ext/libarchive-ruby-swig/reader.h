@@ -39,13 +39,15 @@ class Reader
 #endif
 
 #ifdef SWIG
-%newobject read_open_filename(const char *filename);
-%newobject read_open_memory(const char *string, int length);
+%newobject read_open_filename(const char *filename, const char *cmd);
+%newobject read_open_memory(const char *string, int length, const char *cmd);
 %newobject next_header();
 #endif
 
-        static Reader *read_open_filename(const char *filename);
-        static Reader *read_open_memory(const char *string, int length);
+        static Reader *read_open_filename(const char *filename,
+            const char *cmd = 0);
+        static Reader *read_open_memory(const char *string, int length,
+            const char *cmd = 0);
 
         Entry *next_header();
         VALUE read_data_helper(int len);
