@@ -20,7 +20,7 @@ task :doc do |t|
     File.open('libarchive_wrap.cxx', 'w+').write(wrapper_code)
   end
 
-  sh 'rdoc --title="Libarchive/Ruby/SWIG" -m README - README LICENSE ' +
+  sh 'rdoc --title="Libarchive/Ruby/SWIG" -m README README LICENSE ' +
      'Changelog lib/libarchive_rs.rb ' +
      'ext/libarchive-ruby-swig/libarchive_wrap.cxx'
 
