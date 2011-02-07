@@ -1,3 +1,5 @@
+require 'fileutils'
+
 desc "show available rake tasks"
 task :default do |t|
   puts "The following rake tasks are available\n"
@@ -13,6 +15,20 @@ task :build do |t|
   end
 end
 
+
+desc "clean source tree"
+task :clean do |t|
+  Dir.chdir "ext/libarchive-ruby-swig/" do
+    sh "make distclean" if File.exist? 'libarchive_wrap.cxx'
+  end
+
+  [ 'doc', '*.gem' ].each do |glob|
+    filelist = Dir.glob(glob)
+    filelist.each do |entry|
+      FileUtils.remove_entry_secure(entry)
+    end
+  end
+end
 
 desc "generate a gem bundle"
 task :gem do |t|
