@@ -1,5 +1,12 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 07 Feb 2011 - 23:22:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
+
+* add testsuite
+* add Rakefile with tasks 'build', 'doc', 'gem', 'test' and 'clean'
+* add stat wrapper to allow setting file types without copy_stat
+* external decompression program can be used while reading archive
+
 == 05 Feb 2011 - 23:04:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
 
 * add support for reading archive from memory
@@ -12,7 +19,7 @@
 
 == 30 Jan 2011 - 19:23:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
 
-* Initial release
-* Basic support for reading and writing compressed archives 
-* Interface-compatible to libarchive-ruby
+* initial release
+* basic support for reading and writing compressed archives 
+* interface-compatible to libarchive-ruby
 
