@@ -1,4 +1,3 @@
-require 'rubygems'
 require 'libarchive_rs'
 require 'tmpdir'
 require 'test/unit'
