@@ -28,3 +28,11 @@ task :doc do |t|
     sh "make distclean"
   end
 end
+
+
+desc "run the test suite"
+task :test do |t|
+  Dir.chdir "test" do
+    sh "ruby testsuite.rb"
+  end
+end
