@@ -10,6 +10,8 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "Libarchive/Ruby/SWIG"
   s.extensions = [ "ext/libarchive-ruby-swig/extconf.rb" ]
   s.files = [ "lib/libarchive_rs.rb",
+    "ext/libarchive-ruby-swig/stat.cpp",
+    "ext/libarchive-ruby-swig/stat.h",
     "ext/libarchive-ruby-swig/entry.cpp",
     "ext/libarchive-ruby-swig/entry.h",
     "ext/libarchive-ruby-swig/error.h",

@@ -12,6 +12,14 @@ require 'archive'
 
 module Archive
 
+  ENTRY_FILE = Stat.type_file
+  ENTRY_DIRECTORY = Stat.type_directory
+  ENTRY_SYMBOLIC_LINK = Stat.type_symbolic_link
+  ENTRY_FIFO = Stat.type_fifo
+  ENTRY_SOCKET = Stat.type_socket
+  ENTRY_BLOCK_SPECIAL = Stat.type_block_special
+  ENTRY_CHARACTER_SPECIAL = Stat.type_character_special
+
   class Error < StandardError
   end
 

@@ -14,6 +14,8 @@
 #include <archive.h>
 #include <archive_entry.h>
 #include <ruby.h>
+
+#include "stat.h"
 #include "reader.h"
 #include "writer.h"
 #include "entry.h"
@@ -26,7 +28,7 @@
 
 %apply (char *STRING, int LENGTH) { (const char *string, int length) };
 
+%include "stat.h"
 %include "reader.h"
 %include "writer.h"
 %include "entry.h"
-
