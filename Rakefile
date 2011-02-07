@@ -5,6 +5,15 @@ task :default do |t|
 end
 
 
+desc "build extension"
+task :build do |t|
+  Dir.chdir "ext/libarchive-ruby-swig/" do
+    sh "ruby extconf.rb"
+    sh "make"
+  end
+end
+
+
 desc "generate a gem bundle"
 task :gem do |t|
   sh "gem build libarchive-ruby-swig.gemspec"
