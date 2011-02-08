@@ -21,7 +21,7 @@ if find_executable('g++')
 end
 
 if swig = find_executable('swig')
-  `#{swig} -c++ -ruby -features autodoc libarchive.i`
+  `#{swig} -c++ -ruby -features autodoc=0 libarchive.i`
   $distcleanfiles << 'libarchive_wrap.cxx'
 else
   $stderr.write "You need SWIG to compile this extension.\n"
