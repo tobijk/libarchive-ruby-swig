@@ -25,10 +25,11 @@ task :clean do |t|
   [ 'doc', '*.gem' ].each do |glob|
     filelist = Dir.glob(glob)
     filelist.each do |entry|
-      FileUtils.remove_entry_secure(entry)
+      FileUtils.remove_entry_secure(entry) if entry
     end
   end
 end
+
 
 desc "generate a gem bundle"
 task :gem do |t|
