@@ -88,7 +88,7 @@ module Archive
     # Use one of the <code>Archive::ENTRY_*</code> to specify the filetype of
     # the Entry.
     #
-    def filetype=(filetype)
+    def set_filetype(filetype)
     end
 
     ##
@@ -107,7 +107,7 @@ module Archive
     # field will not be availabla in most cases and is, in any case,
     # platform-specific.
     #
-    def devmajor=(devmajor)
+    def set_devmajor(devmajor)
     end
 
     ##
@@ -126,7 +126,7 @@ module Archive
     # field will not be availabla in most cases and is, in any case,
     # platform-specific.
     #
-    def devminor=(devminor)
+    def set_devminor(devminor)
     end
 
     ##
@@ -169,7 +169,7 @@ module Archive
     # Sets the device id of the device on which entry resided. This is usually
     # unused and, in any case, platform-specific.
     #
-    def dev=(dev)
+    def set_dev(dev)
     end
 
     ##
@@ -183,7 +183,7 @@ module Archive
     #
     # Sets the group id of the Entry.
     #
-    def gid=(gid)
+    def set_gid(gid)
     end
 
     ##
@@ -197,7 +197,7 @@ module Archive
     #
     # Sets the group name of the Entry.
     #
-    def gname=(gname)
+    def set_gname(gname)
     end
 
     ##
@@ -211,7 +211,7 @@ module Archive
     #
     # Sets the path to the file this entry is hard-linked to.
     #
-    def hardlink=
+    def set_hardlink(path)
     end
 
     ##
@@ -225,7 +225,7 @@ module Archive
     #
     # Sets the inode of Entry.
     #
-    def ino=(ino)
+    def set_ino(ino)
     end
 
     ##
@@ -239,7 +239,7 @@ module Archive
     #
     # Sets the permission bits (and/or filetype) of Entry.
     #
-    def mode=(mode)
+    def set_mode(mode)
     end
 
     ##
@@ -253,7 +253,7 @@ module Archive
     #
     # Sets the mtime of the saved Entry from a timestamp.
     #
-    def mtime=(mtime)
+    def set_mtime(mtime)
     end
 
     ##
@@ -267,7 +267,7 @@ module Archive
     #
     # Sets the number of hard links to this Entry.
     #
-    def nlink=(num_links)
+    def set_nlink(num_links)
     end
 
     ##
@@ -281,7 +281,7 @@ module Archive
     #
     # Sets the pathname of this Entry.
     #
-    def pathname=(pathname)
+    def set_pathname(pathname)
     end
 
     ##
@@ -295,7 +295,7 @@ module Archive
     #
     # Sets the dev major number of the device this Entry represents.
     #
-    def rdevmajor=(devmajor)
+    def set_rdevmajor(devmajor)
     end
 
     ##
@@ -309,7 +309,7 @@ module Archive
     #
     # Sets the dev minor number of the device this Entry represents.
     #
-    def rdevminor=(devminor)
+    def set_rdevminor(devminor)
     end
 
     ##
@@ -325,7 +325,7 @@ module Archive
     # Sets the size of the Entry. In case Entry is a symlink, this should
     # be the length of the string set with <code>symlink=</code>.
     #
-    def size=()
+    def set_size()
     end
 
     ##
@@ -339,7 +339,7 @@ module Archive
     #
     # Sets the target of a symlink Entry.
     #
-    def symlink=(symlink)
+    def set_symlink(path)
     end
 
     ##
@@ -353,7 +353,7 @@ module Archive
     #
     # Sets the user id of this Entry.
     #
-    def uid=(uid)
+    def set_uid(uid)
     end
 
     ##
@@ -367,7 +367,7 @@ module Archive
     #
     # Sets the owner name of this Entry.
     #
-    def uname=(uname)
+    def set_uname(uname)
     end
 
     private
