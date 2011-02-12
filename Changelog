@@ -1,5 +1,9 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 12 Feb 2011 - 09:15:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
+
+* documentation updates
+
 == 07 Feb 2011 - 23:22:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
 
 * add testsuite
