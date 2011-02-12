@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name = "libarchive-ruby-swig"
-  s.version = "0.5.1"
-  s.date = "2011-02-07"
+  s.version = "0.5.2"
+  s.date = "2011-02-12"
   s.authors = ["Tobias Koch"]
   s.email = "tobias.koch@gmail.com"
   s.summary = "Ruby bindings to libarchive"
@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.rubyforge_project = "Libarchive/Ruby/SWIG"
   s.extensions = [ "ext/libarchive-ruby-swig/extconf.rb" ]
   s.files = [ "lib/libarchive_rs.rb",
+    "lib/libarchive_doc.rb",
     "ext/libarchive-ruby-swig/stat.cpp",
     "ext/libarchive-ruby-swig/stat.h",
     "ext/libarchive-ruby-swig/entry.cpp",
