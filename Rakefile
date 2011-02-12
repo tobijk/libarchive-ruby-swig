@@ -47,7 +47,7 @@ task :doc do |t|
   end
 
   sh 'rdoc --title="Libarchive/Ruby/SWIG" -m README README LICENSE ' +
-     'Changelog lib/libarchive_rs.rb ' +
+     'Changelog lib/libarchive_rs.rb lib/libarchive_doc.rb ' +
      'ext/libarchive-ruby-swig/libarchive_wrap.cxx'
 
   Dir.chdir "ext/libarchive-ruby-swig/" do

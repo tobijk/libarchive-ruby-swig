@@ -20,9 +20,6 @@ module Archive
   ENTRY_BLOCK_SPECIAL = Stat.type_block_special
   ENTRY_CHARACTER_SPECIAL = Stat.type_character_special
 
-  class Error < StandardError
-  end
-
   class Entry
     alias :file? :is_file
     alias :directory? :is_directory
@@ -52,6 +49,11 @@ module Archive
     alias :uid= :set_uid
     alias :uname= :set_uname
 
+    ##
+    #
+    # Populates an Entry by doing a stat on given path and copying all
+    # attributes.
+    #
     def copy_stat(path)
       copy_stat_helper(path)
       self.set_symlink(File.readlink(path)) if self.symbolic_link?
@@ -61,7 +63,13 @@ module Archive
   end
 
   class Reader
- 
+
+    ##
+    #
+    # Reads size bytes from the Archive. If a block is given, chunks of size
+    # bytes are repeatedly passed to the block until the complete data stored
+    # for the Entry has been read.
+    #
     def read_data(size)
       if block_given?
         while result = self.read_data_helper(size)
@@ -77,6 +85,12 @@ module Archive
 
   class Writer
 
+    ##
+    #
+    # Returns a new Entry instance. An Entry holds the meta data for an item
+    # stored in an Archive, such as filetype, mode, owner, etc. It is written
+    # before the actual data.
+    #
     def new_entry()
       entry = self.new_entry_helper
       if block_given?
@@ -86,6 +100,11 @@ module Archive
       end
     end
 
+    ##
+    #
+    # Write data to Archive. If a block is given, data returned from the block
+    # is stored until the block returns nil.
+    #
     def write_data(data = nil)
       if block_given?
         while result = yield
@@ -99,6 +118,14 @@ module Archive
     private_class_method :new
   end
 
+  ##
+  #
+  # Open filename for reading. Libarchive automatically determines archive
+  # format and compression scheme. Optionally, you can specify an auxiliary
+  # command to be used for decompression.
+  #
+  # Returns a Reader instance.
+  #
   def self.read_open_filename(filename, cmd = nil)
     unless cmd.nil?
       cmd = locate_cmd(cmd)
@@ -114,6 +141,14 @@ module Archive
     end
   end
 
+  ##
+  #
+  # Read archive from string. Libarchive automatically determines archive
+  # format and compression scheme. Optionally, you can specify an auxiliary
+  # command to be used for decompression.
+  #
+  # Returns a Reader instance.
+  #
   def self.read_open_memory(string, cmd = nil)
     unless cmd.nil?
       cmd = locate_cmd(cmd)
@@ -129,6 +164,15 @@ module Archive
     end
   end
 
+  ##
+  #
+  # Open filename for writing. Specify the compression format by passing one
+  # of the <code>Archive::COMPRESSION_*</code> constants or optionally specify
+  # an auxiliary program to use for compression. Use one of the
+  # <code>Archive::FORMAT_*</code> constants to specify the archive format.
+  # 
+  # Returns a Writer instance.
+  #
   def self.write_open_filename(filename, compression, format)
     if compression.is_a? String
       compresion = locate_cmd(compression)

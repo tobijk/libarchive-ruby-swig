@@ -4,9 +4,11 @@ Copyright (c) 2011, Tobias Koch <tobias.koch@gmail.com>
 
 = Description
 
-Ruby bindings to libarchive allowing reading and creation of compressed archive files of various formats.
-This gem uses {SWIG}[http://swig.org] to generate the bindings from a simple C++ wrapper around libarchive.
-It aims to be interface-compatible with the {Libarchive/Ruby}[https://bitbucket.org/winebarrel/libarchive-ruby/]
+Ruby bindings to libarchive allowing reading and creation of compressed archive
+files of various formats. This gem uses {SWIG}[http://swig.org] to generate the
+bindings from a simple C++ wrapper around libarchive. It aims to be
+interface-compatible with the
+{Libarchive/Ruby}[https://bitbucket.org/winebarrel/libarchive-ruby/] 
 gem by Sugawara Genki, which is a pure Ruby/C extension.
 
 = Installation
@@ -29,7 +31,7 @@ Please mind that you need the development files for libarchive to compile the na
 
 = Usage Examples
 
-== Writing an \Archive
+== Writing an Archive
 
 The following example shows how to recursively pack everything from the current
 working directory into a bzip2-compressed tarball:
@@ -54,7 +56,7 @@ working directory into a bzip2-compressed tarball:
   end
 
 
-== Reading from an \Archive
+== Reading from an Archive
 
 The following example shows how to extract all files from the given archive to
 the current working directory:
