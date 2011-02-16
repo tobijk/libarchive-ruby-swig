@@ -68,15 +68,32 @@ module Archive
     #
     # Reads size bytes from the Archive. If a block is given, chunks of size
     # bytes are repeatedly passed to the block until the complete data stored
-    # for the Entry has been read.
+    # for the Entry has been read. If size is not specified, all data stored
+    # is returned at once.
     #
-    def read_data(size)
+    def read_data(size = nil)
       if block_given?
-        while result = self.read_data_helper(size)
-          yield result
+        if size.nil?
+          result = []
+          while data = self.read_data_helper(1024)
+            result << data
+          end
+          yield result.join('')
+        else
+          while data = self.read_data_helper(size)
+            yield data
+          end
         end
       else
-        return self.read_data_helper(size)
+        if size.nil?
+          result = []
+          while data = self.read_data_helper(1024)
+            result << data
+          end
+          return result.join('')
+        else
+          return self.read_data_helper(size)
+        end
       end
     end
  
@@ -107,8 +124,8 @@ module Archive
     #
     def write_data(data = nil)
       if block_given?
-        while result = yield
-          self.write_data_helper(result)
+        while data = yield
+          self.write_data_helper(data)
         end
       else
         self.write_data_helper(data)

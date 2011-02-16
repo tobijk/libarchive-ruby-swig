@@ -1,4 +1,5 @@
 require 'libarchive_rs'
+require 'tmpdir'
 require 'test/unit'
 
 class TS_ReadArchive < Test::Unit::TestCase
@@ -43,6 +44,50 @@ class TS_ReadArchive < Test::Unit::TestCase
     end
   end
 
+  def test_read_entry_bigger_than_internal_buffer
+    alphabet = "abcdefghijklmnopqrstuvwxyz"
+    entry_size = 1024 * 4 - 3
+
+    srand
+    content = ""
+    1.upto(entry_size) do |i|
+      index = rand(alphabet.size)
+      content += alphabet[index,1]
+    end
+
+    Dir.mktmpdir do |dir|
+      Archive.write_open_filename(dir + '/test.tar.gz',
+          Archive::COMPRESSION_BZIP2, Archive::FORMAT_TAR) do |ar|
+        ar.new_entry do |entry|
+          entry.pathname = "chubby.dat"
+          entry.mode = 0666
+          entry.filetype = Archive::ENTRY_FILE
+          entry.atime = Time.now.to_i
+          entry.mtime = Time.now.to_i
+          entry.size = entry_size
+          ar.write_header(entry)
+          ar.write_data(content)
+        end
+      end
+
+      Archive.read_open_filename(dir + '/test.tar.gz') do |ar|
+        entry = ar.next_header
+        data = ar.read_data
+
+        assert_equal entry_size, data.size
+        assert_equal content.size, data.size
+        assert_equal content, data
+      end
+
+      Archive.read_open_filename(dir + '/test.tar.gz') do |ar|
+        entry = ar.next_header
+        data = ""
+        ar.read_data(128) { |chunk| data += chunk }
+
+        assert_equal content, data
+      end
+    end
+  end
 
   private
 
