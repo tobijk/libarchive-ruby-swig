@@ -1,5 +1,13 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 27 Feb 2011 - 12:36:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
+
+* allow reading of entry filetype
+
+== 16 Feb 2011 - 20:00:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
+
+* calling read_data without argument returns full entry
+
 == 12 Feb 2011 - 09:15:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
 
 * documentation updates
