@@ -31,6 +31,7 @@ class Entry
         bool is_fifo();
         bool is_socket();
 
+        unsigned int filetype();
         void set_filetype(unsigned int filetype);
 
         unsigned int devmajor();

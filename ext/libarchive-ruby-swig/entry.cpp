@@ -69,6 +69,11 @@ bool Entry::is_socket()
     return S_ISSOCK(archive_entry_filetype(_entry));
 }
 
+unsigned int Entry::filetype()
+{
+    return archive_entry_filetype(_entry);
+}
+
 void Entry::set_filetype(unsigned int filetype)
 {
     archive_entry_set_filetype(_entry, filetype);

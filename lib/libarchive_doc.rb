@@ -85,6 +85,13 @@ module Archive
 
     ##
     #
+    # Returns the filetype bits for entry.
+    #
+    def filetype
+    end
+
+    ##
+    #
     # Use one of the <code>Archive::ENTRY_*</code> to specify the filetype of
     # the Entry.
     #
@@ -98,7 +105,6 @@ module Archive
     # platform-specific.
     #
     def devmajor
-      return numeric_result
     end
 
     ##
