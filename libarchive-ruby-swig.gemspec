@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name = "libarchive-ruby-swig"
-  s.version = "0.5.4"
-  s.date = "2011-02-27"
+  s.version = "0.5.6"
+  s.date = "2011-04-16"
   s.authors = ["Tobias Koch"]
   s.email = "tobias.koch@gmail.com"
   s.summary = "Ruby bindings to libarchive"
-  s.description = "libarchive-ruby-swig provides Ruby bindings to libarchive using SWIG. The gem allows you to read and write compressed archives in a variety of formats."
+  s.description = "Ruby bindings to libarchive allowing reading and creation of compressed archives in a variety of formats."
   s.homepage = "http://libarchive-rs.rubyforge.org"
   s.rubyforge_project = "Libarchive/Ruby/SWIG"
   s.extensions = [ "ext/libarchive-ruby-swig/extconf.rb" ]
