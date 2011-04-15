@@ -30,6 +30,7 @@ class Entry
         bool is_character_special();
         bool is_fifo();
         bool is_socket();
+        bool is_hardlink();
 
         unsigned int filetype();
         void set_filetype(unsigned int filetype);

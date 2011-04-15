@@ -35,7 +35,12 @@ Entry::~Entry()
 
 bool Entry::is_file()
 {
-    return S_ISREG(archive_entry_filetype(_entry));
+    if(S_ISREG(archive_entry_filetype(_entry)) &&
+        !this->is_hardlink()) {
+        return true;
+    }
+
+    return false;
 }
 
 bool Entry::is_directory()
@@ -66,6 +71,14 @@ bool Entry::is_fifo()
 bool Entry::is_socket()
 {
     return S_ISSOCK(archive_entry_filetype(_entry));
+}
+
+bool Entry::is_hardlink()
+{
+    if(archive_entry_hardlink(_entry) != 0)
+        return true;
+
+    return false;
 }
 
 unsigned int Entry::filetype()

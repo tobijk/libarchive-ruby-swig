@@ -37,6 +37,38 @@ class TS_WriteArchive < Test::Unit::TestCase
     end 
   end
 
+  def test_implicit_hardlink_handling
+    Dir.mktmpdir do |dir|
+      Dir.mkdir(dir + '/test')
+      File.open(dir + '/test/a.dat', 'wb+') { |f| f.write("This is a test.\n") }
+      File.link(dir + '/test/a.dat', dir + '/test/b.dat')
+
+      ar = Archive.write_open_filename(dir + '/test.tar.gz',
+          Archive::COMPRESSION_GZIP, Archive::FORMAT_TAR)
+
+      Dir.glob(dir + '/test/**/*') do |fn|
+        entry = ar.new_entry
+        entry.copy_stat(fn)
+        entry.pathname = fn
+        ar.write_header(entry)
+
+        if entry.file?
+          open(fn) do |f|
+            ar.write_data { f.read(1024) }
+          end
+        end
+
+        # check that b.dat is turned into link to a.dat
+        if File.basename(fn) == "b.dat"
+          assert entry.hardlink?
+          assert_equal dir + '/test/a.dat', entry.hardlink
+        end
+      end
+
+      ar.close()
+    end
+  end
+
   private
 
   def write_content(ar)

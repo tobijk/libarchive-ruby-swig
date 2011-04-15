@@ -1,5 +1,9 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 16 Apr 2011 - 01:08:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
+
+* handle hardlinks automatically as they are stored to the archive
+
 == 27 Feb 2011 - 12:36:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
 
 * allow reading of entry filetype

@@ -122,6 +122,16 @@ Entry *Writer::new_entry_helper()
 
 void Writer::write_header(Entry *entry)
 {
+    if(entry->nlink() > 1) {
+        std::string path = _hardlinks[entry->dev()][entry->ino()];
+        if(path.empty()) {
+            _hardlinks[entry->dev()][entry->ino()] =
+                std::string(entry->pathname());
+        } else {
+            entry->set_hardlink(path.c_str());
+        }
+    }
+
     if(archive_write_header(_ar, entry->_entry) != ARCHIVE_OK) {
         std::string error_msg = archive_error_string(_ar);
         throw Error(error_msg);

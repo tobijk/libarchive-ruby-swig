@@ -85,6 +85,13 @@ module Archive
 
     ##
     #
+    # Is Entry a hardlink?
+    #
+    def is_hardlink
+    end
+
+    ##
+    #
     # Returns the filetype bits for entry.
     #
     def filetype

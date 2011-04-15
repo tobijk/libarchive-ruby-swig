@@ -16,6 +16,8 @@ class Entry;
 
 #ifndef SWIG
 #include <ruby.h>
+#include <string>
+#include <map>
 #endif
 
 namespace Archive
@@ -101,6 +103,7 @@ class Writer
         char *_buf;
         int _buf_size;
 
+        std::map<unsigned long, std::map<unsigned long, std::string> > _hardlinks;
 };
 
 #endif

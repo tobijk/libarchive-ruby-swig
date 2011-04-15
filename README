@@ -6,9 +6,8 @@ Copyright (c) 2011, Tobias Koch <tobias.koch@gmail.com>
 
 Ruby bindings to libarchive allowing reading and creation of compressed archive
 files of various formats. This gem uses {SWIG}[http://swig.org] to generate the
-bindings from a simple C++ wrapper around libarchive. It aims to be
-interface-compatible with the
-{Libarchive/Ruby}[https://bitbucket.org/winebarrel/libarchive-ruby/] 
+bindings from a C++ wrapper around libarchive. It is mostly interface-compatible
+with the {Libarchive/Ruby}[https://bitbucket.org/winebarrel/libarchive-ruby/]
 gem by Sugawara Genki, which is a pure Ruby/C extension.
 
 = Installation

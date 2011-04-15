@@ -28,6 +28,7 @@ module Archive
     alias :character_special? :is_character_special
     alias :fifo? :is_fifo
     alias :socket? :is_socket
+    alias :hardlink? :is_hardlink
 
     alias :filetype= :set_filetype
     alias :devmajor= :set_devmajor
