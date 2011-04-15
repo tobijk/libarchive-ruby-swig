@@ -22,9 +22,8 @@
 #include "error.h"
 
 Entry::Entry(struct archive_entry *entry)
-{
-    _entry = entry;
-}
+    : _entry(entry)
+{}
 
 Entry::~Entry()
 {
