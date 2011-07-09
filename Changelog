@@ -1,5 +1,11 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 09 Jul 2011 - 13:47:00 +0300 - Tobias Koch <tobias.koch@gmail.com>
+
+* improve Rakefile
+  * add proper dependencies between tasks
+  * separate doc target in doc:rdoc and doc:yard
+
 == 16 Apr 2011 - 01:08:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
 
 * handle hardlinks automatically as they are stored to the archive
