@@ -19,7 +19,7 @@ task :clean do |t|
     sh "make distclean" if File.exist? "Makefile"
   end
 
-  [ 'doc', '*.gem' ].each do |glob|
+  [ 'doc', '*.gem', '.yardoc' ].each do |glob|
     filelist = Dir.glob(glob)
     filelist.each do |entry|
       FileUtils.remove_entry_secure(entry) if entry
