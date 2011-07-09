@@ -1,25 +1,22 @@
 require 'fileutils'
 
-desc "show available rake tasks"
-task :default do |t|
-  puts "The following rake tasks are available\n"
-  sh "rake -T"
-end
+task :default => :build
 
-
-desc "build extension"
-task :build do |t|
+source_files = Dir['ext/libarchive-ruby-swig/*.{cpp,h}']
+file 'ext/libarchive-ruby-swig/archive.so' => source_files do
   Dir.chdir "ext/libarchive-ruby-swig/" do
     sh "ruby extconf.rb"
     sh "make"
   end
 end
+desc "build extension"
+task :build => 'ext/libarchive-ruby-swig/archive.so'
 
 
 desc "clean source tree"
 task :clean do |t|
   Dir.chdir "ext/libarchive-ruby-swig/" do
-    sh "make distclean" if File.exist? 'libarchive_wrap.cxx'
+    sh "make distclean" if File.exist? "Makefile"
   end
 
   [ 'doc', '*.gem' ].each do |glob|
@@ -37,27 +34,43 @@ task :gem do |t|
 end
 
 
-desc "generate sanitized rdoc documentation"
-task :doc do |t|
-  Dir.chdir "ext/libarchive-ruby-swig/" do
-    sh "ruby extconf.rb"
-    wrapper_code = File.open('libarchive_wrap.cxx', 'r').read
-    wrapper_code.slice! /^.*\/\*\s+---\s+WRAPPER CODE START\s+---\s+\*\//m
-    File.open('libarchive_wrap.cxx', 'w+').write(wrapper_code)
+namespace :doc do
+  task :sanitize do |t|
+    Dir.chdir "ext/libarchive-ruby-swig/" do
+      sh "ruby extconf.rb"
+      wrapper_code = IO.read('libarchive_wrap.cxx')
+      wrapper_code.slice! /^.*\/\*\s+---\s+WRAPPER CODE START\s+---\s+\*\//m
+      File.open('libarchive_wrap_doc.cxx', 'w+') { |f| f.write(wrapper_code) }
+    end
   end
 
-  sh 'rdoc --title="Libarchive/Ruby/SWIG" -m README README LICENSE ' +
-     'Changelog lib/libarchive_rs.rb lib/libarchive_doc.rb ' +
-     'ext/libarchive-ruby-swig/libarchive_wrap.cxx'
+  desc "generate sanitized rdoc documentation"
+  task :rdoc => :sanitize do |t|
+    sh 'rdoc --title="libarchive-ruby-swig" -m README README LICENSE ' +
+       'Changelog lib/libarchive_rs.rb lib/libarchive_doc.rb ' +
+       'ext/libarchive-ruby-swig/libarchive_wrap_doc.cxx'
 
-  Dir.chdir "ext/libarchive-ruby-swig/" do
-    sh "make distclean"
+    Dir.chdir "ext/libarchive-ruby-swig/" do
+      sh "make distclean"
+    end
   end
+
+  desc "generate sanitized yard documentation"
+  task :yard => :sanitize do |t|
+    sh 'yard --title="libarchive-ruby-swig" -r README lib/libarchive_rs.rb ' +
+       'lib/libarchive_doc.rb ' +
+       ' - LICENSE Changelog'
+
+    Dir.chdir "ext/libarchive-ruby-swig/" do
+      sh "make distclean"
+    end
+  end
+
 end
 
 
 desc "run the test suite"
-task :test do |t|
+task :test => :build do |t|
   Dir.chdir "test" do
     sh "ruby testsuite.rb"
   end
