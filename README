@@ -1,4 +1,4 @@
-= Libarchive/Ruby/SWIG
+= libarchive-ruby-swig
 
 Copyright (c) 2011, Tobias Koch <tobias.koch@gmail.com>
 
@@ -8,7 +8,7 @@ Ruby bindings to libarchive allowing reading and creation of compressed archive
 files of various formats. This gem uses {SWIG}[http://swig.org] to generate the
 bindings from a C++ wrapper around libarchive. It is mostly interface-compatible
 with the {Libarchive/Ruby}[https://bitbucket.org/winebarrel/libarchive-ruby/]
-gem by Sugawara Genki, which is a pure Ruby/C extension.
+gem by Sugawara Genki.
 
 = Installation
 
@@ -25,7 +25,7 @@ and then build and install
  gem build libarchive-ruby-swig.gemspec
  gem install libarchive-ruby-swig-<version>.gem
 
-Please mind that you need the development files for libarchive to compile the native extension.
+Please mind that you need to install SWIG and the development files for libarchive in order to compile the native extension.
 
 
 = Usage Examples
@@ -78,6 +78,5 @@ the current working directory:
     end
   end
 
-This example doesn't treat special entries, like device nodes, correctly. It
-restores permision bits, but not ownership or ACLs.
+Note that this example doesn't treat special entries, such as device nodes, correctly.
 
