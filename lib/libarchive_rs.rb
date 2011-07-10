@@ -12,6 +12,23 @@ require 'archive'
 
 module Archive
 
+  ##
+  #
+  # Thrown on problems with opening or processing an archive.
+  #
+  class Error < StandardError
+  end
+
+  ##
+  #
+  # This class is not meant to be used directly. It exists for the sole purpose
+  # of initializing the <code>Archive::ENTRY_*</code> constants in a
+  # platform-independent way.
+  #
+  class Stat
+    private_class_method :new
+  end  
+
   ENTRY_FILE = Stat.type_file
   ENTRY_DIRECTORY = Stat.type_directory
   ENTRY_SYMBOLIC_LINK = Stat.type_symbolic_link
@@ -105,9 +122,9 @@ module Archive
 
     ##
     #
-    # Returns a new Entry instance. An Entry holds the meta data for an item
-    # stored in an Archive, such as filetype, mode, owner, etc. It is written
-    # before the actual data.
+    # Creates a new Entry. An Entry holds the meta data for an item stored in
+    # an Archive, such as filetype, mode, owner, etc. It is typically populated
+    # by a call to <code>copy_stat</code>. It is written before the actual data.
     #
     def new_entry()
       entry = self.new_entry_helper

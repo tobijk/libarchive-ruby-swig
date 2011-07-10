@@ -47,23 +47,21 @@ namespace :doc do
   desc "generate sanitized rdoc documentation"
   task :rdoc => :sanitize do |t|
     sh 'rdoc --title="libarchive-ruby-swig" -m README README LICENSE ' +
-       'Changelog lib/libarchive_rs.rb lib/libarchive_doc.rb ' +
+       'Changelog lib/libarchive_rs.rb ' +
        'ext/libarchive-ruby-swig/libarchive_wrap_doc.cxx'
 
-    Dir.chdir "ext/libarchive-ruby-swig/" do
-      sh "make distclean"
-    end
+    File.unlink('ext/libarchive-ruby-swig/libarchive_wrap_doc.cxx') \
+      if File.exist? 'ext/libarchive-ruby-swig/libarchive_wrap_doc.cxx'
   end
 
   desc "generate sanitized yard documentation"
   task :yard => :sanitize do |t|
     sh 'yard --title="libarchive-ruby-swig" -r README lib/libarchive_rs.rb ' +
-       'lib/libarchive_doc.rb ' +
-       ' - LICENSE Changelog'
+       'ext/libarchive-ruby-swig/libarchive_wrap_doc.cxx ' +
+       '- LICENSE Changelog'
 
-    Dir.chdir "ext/libarchive-ruby-swig/" do
-      sh "make distclean"
-    end
+    File.unlink('ext/libarchive-ruby-swig/libarchive_wrap_doc.cxx') \
+      if File.exist? 'ext/libarchive-ruby-swig/libarchive_wrap_doc.cxx'
   end
 
 end

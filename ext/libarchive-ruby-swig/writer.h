@@ -54,6 +54,10 @@ class Writer
     public:
         Writer(struct archive *ar);
         virtual ~Writer();
+
+        #ifdef SWIG
+        %feature("autodoc", "Releases all resources associated with the Writer object") close;
+        #endif
         void close();
 
 #ifdef SWIG
@@ -70,6 +74,7 @@ class Writer
 #endif
 
 #ifdef SWIG
+%feature("autodoc", "Use Archive::write_open_filename instead") write_open_filename;
 %newobject write_open_filename(const char *filename,
     const char *cmd, int format);
 %newobject write_open_filename(const char *filename,
@@ -82,6 +87,9 @@ class Writer
         static Writer *write_open_filename(const char *filename,
             int compression, int format);
 
+        #ifdef SWIG
+        %feature("autodoc", "Write Entry meta data to Archive") write_header;
+        #endif
         void write_header(Entry *entry);
 
         void write_data_helper(const char *string, int length);
