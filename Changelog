@@ -1,5 +1,15 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 07 Nov 2011 - 23:10:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
+
+* entry.cpp: add missing return statements!
+* reader.h: put class members in initialization order
+* remove libarchive_doc.rb from gemspec
+* project name is libarchive-ruby-swig in LICENSE file
+* use SWIG docstrings for documentation
+* remove .yardoc directory on clean
+* cosmetic updates to README
+
 == 09 Jul 2011 - 13:47:00 +0300 - Tobias Koch <tobias.koch@gmail.com>
 
 * improve Rakefile
