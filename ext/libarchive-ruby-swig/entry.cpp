@@ -113,7 +113,7 @@ void Entry::set_devminor(unsigned int devminor)
 
 unsigned long Entry::atime()
 {
-    archive_entry_atime(_entry);
+    return archive_entry_atime(_entry);
 }
 
 void Entry::set_atime(unsigned long atime)
@@ -128,7 +128,7 @@ void Entry::clear()
 
 Entry *Entry::clone()
 {
-    new Entry(archive_entry_clone(_entry));
+    return new Entry(archive_entry_clone(_entry));
 }
 
 unsigned long Entry::dev()
