@@ -66,8 +66,8 @@ class Reader
     private:
         struct archive *_ar;
         char *_buf;
-        char *_archive_content;
         int _buf_size;
+        char *_archive_content;
 };
 
 #endif
