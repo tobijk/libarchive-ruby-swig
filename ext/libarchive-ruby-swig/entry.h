@@ -284,7 +284,8 @@ class Entry
         static VALUE c_archive = rb_define_module("Archive");
         static VALUE e_archive =
             rb_define_class_under(c_archive, "Error", rb_eStandardError);
-        rb_raise(e_archive, err.what());
+        static VALUE o_except = rb_exc_new2(e_archive, err.what());
+        rb_exc_raise(o_except);
     }
 }
 #endif
