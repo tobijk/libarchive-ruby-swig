@@ -1,11 +1,16 @@
 require 'fileutils'
+require 'rbconfig'
+
+RUBY_EXE = File.join(Config::CONFIG["bindir"],
+                     Config::CONFIG["RUBY_INSTALL_NAME"] +
+                     Config::CONFIG["EXEEXT"])
 
 task :default => :build
 
 source_files = Dir['ext/libarchive-ruby-swig/*.{cpp,h}']
 file 'ext/libarchive-ruby-swig/archive.so' => source_files do
   Dir.chdir "ext/libarchive-ruby-swig/" do
-    sh "ruby extconf.rb"
+    sh "#{RUBY_EXE} extconf.rb"
     sh "make"
   end
 end
@@ -37,7 +42,7 @@ end
 namespace :doc do
   task :sanitize do |t|
     Dir.chdir "ext/libarchive-ruby-swig/" do
-      sh "ruby extconf.rb"
+      sh "#{RUBY_EXE} extconf.rb"
       wrapper_code = IO.read('libarchive_wrap.cxx')
       wrapper_code.slice! /^.*\/\*\s+---\s+WRAPPER CODE START\s+---\s+\*\//m
       File.open('libarchive_wrap_doc.cxx', 'w+') { |f| f.write(wrapper_code) }
@@ -70,6 +75,6 @@ end
 desc "run the test suite"
 task :test => :build do |t|
   Dir.chdir "test" do
-    sh "ruby testsuite.rb"
+    sh "#{RUBY_EXE} testsuite.rb"
   end
 end
