@@ -20,8 +20,13 @@ if find_executable('g++')
   $libs = append_library($libs, "stdc++")
 end
 
-if swig = find_executable('swig')
+swig = [ 'swig2', 'swig2.0', 'swig' ].select { |swig_name|
+  find_executable(swig_name) }.first
+
+if swig
+  $stdout.write "Using '#{swig}' to generate wrapper code... "
   `#{swig} -c++ -ruby -features autodoc=0 libarchive.i`
+  $stdout.write "done\n"
   $distcleanfiles += [ 'libarchive_wrap.cxx', 'libarchive_wrap_doc.cxx' ]
 else
   $stderr.write "You need SWIG to compile this extension.\n"
