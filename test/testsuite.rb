@@ -1,4 +1,4 @@
-$LOAD_PATH.unshift '../lib/', '../ext/libarchive-ruby-swig/'
+$LOAD_PATH.unshift '.', '../lib/', '../ext/libarchive-ruby-swig/'
 
 require 'test/unit'
 require 'sets/ts_read'
