@@ -1,5 +1,12 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 08 May 2012 - 21:38:00 +0300 - Tobias Koch <tobias.koch@gmail.com>
+
+* extconf: scan for swig2, swig2.0, swig, ...
+* construct exception objects using rb_exc_new2
+* add '.' to load path when running testsuite.rb for ruby 1.9
+* Rakefile: always call the exact ruby interpreter that's running rake
+
 == 07 Nov 2011 - 23:10:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
 
 * entry.cpp: add missing return statements!
