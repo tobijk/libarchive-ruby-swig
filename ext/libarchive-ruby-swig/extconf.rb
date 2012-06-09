@@ -11,7 +11,8 @@
 require 'mkmf'
 
 unless have_header('archive.h') && \
-  have_library('archive', 'archive_read_open_filename')
+  have_library('archive', 'archive_read_open_filename') &&
+  have_library('archive', 'archive_read_support_format_raw')
   $stderr.write "Libarchive development files not found.\n"
   exit 1
 end

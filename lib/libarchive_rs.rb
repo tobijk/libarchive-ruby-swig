@@ -161,12 +161,12 @@ module Archive
   #
   # Returns a Reader instance.
   #
-  def self.read_open_filename(filename, cmd = nil)
+  def self.read_open_filename(filename, cmd = nil, raw = false)
     unless cmd.nil?
       cmd = locate_cmd(cmd)
     end
 
-    ar = Reader.read_open_filename(filename, cmd)
+    ar = Reader.read_open_filename(filename, cmd, raw)
  
     if block_given?
       yield ar
@@ -184,12 +184,12 @@ module Archive
   #
   # Returns a Reader instance.
   #
-  def self.read_open_memory(string, cmd = nil)
+  def self.read_open_memory(string, cmd = nil, raw = false)
     unless cmd.nil?
       cmd = locate_cmd(cmd)
     end
 
-    ar = Reader.read_open_memory(string, cmd)
+    ar = Reader.read_open_memory(string, cmd, raw)
 
     if block_given?
       yield ar

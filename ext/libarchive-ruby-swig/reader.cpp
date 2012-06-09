@@ -47,7 +47,7 @@ void Reader::close()
 }
 
 
-Reader *Reader::read_open_filename(const char *filename, const char *cmd) 
+Reader *Reader::read_open_filename(const char *filename, const char *cmd, bool raw) 
 {
     struct archive *ar = archive_read_new();
 
@@ -60,8 +60,13 @@ Reader *Reader::read_open_filename(const char *filename, const char *cmd)
                 throw 0;
         }
 
-        if(archive_read_support_format_all(ar) != ARCHIVE_OK)
-            throw 0;
+        if(raw) {
+            if(archive_read_support_format_raw(ar) != ARCHIVE_OK)
+                throw 0;
+        } else {
+            if(archive_read_support_format_all(ar) != ARCHIVE_OK)
+                throw 0;
+        }
 
         if(archive_read_open_filename(ar, filename, 1024) != ARCHIVE_OK)
             throw 0;
@@ -77,7 +82,7 @@ Reader *Reader::read_open_filename(const char *filename, const char *cmd)
 
 
 Reader *Reader::read_open_memory(const char *string, int length,
-    const char *cmd)
+    const char *cmd, bool raw)
 {
     struct archive *ar = archive_read_new();
     char *content = (char*) malloc(length);
@@ -92,8 +97,13 @@ Reader *Reader::read_open_memory(const char *string, int length,
                 throw 0;
         }
 
-        if(archive_read_support_format_all(ar) != ARCHIVE_OK)
-            throw 0;
+        if(raw) {
+            if(archive_read_support_format_raw(ar) != ARCHIVE_OK)
+                throw 0;
+        } else {
+            if(archive_read_support_format_all(ar) != ARCHIVE_OK)
+                throw 0;
+        }
 
         if(archive_read_open_memory(ar, (void*) content, length) != ARCHIVE_OK)
             throw 0;

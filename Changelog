@@ -1,5 +1,9 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 09 Jun 2012 - 14:41:00 +0300 - Tobias Koch <tobias.koch@gmail.com>
+
+* add 'raw' parameter to read methods for reading of compressed blobs
+
 == 08 May 2012 - 21:38:00 +0300 - Tobias Koch <tobias.koch@gmail.com>
 
 * extconf: scan for swig2, swig2.0, swig, ...
