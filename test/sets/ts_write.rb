@@ -46,7 +46,10 @@ class TS_WriteArchive < Test::Unit::TestCase
       ar = Archive.write_open_filename(dir + '/test.tar.gz',
           Archive::COMPRESSION_GZIP, Archive::FORMAT_TAR)
 
-      Dir.glob(dir + '/test/**/*') do |fn|
+      filelist = Dir.glob(dir + '/test/**/*')
+      filelist.sort!
+
+      filelist.each do |fn|
         entry = ar.new_entry
         entry.copy_stat(fn)
         entry.pathname = fn
