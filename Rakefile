@@ -1,9 +1,9 @@
 require 'fileutils'
 require 'rbconfig'
 
-RUBY_EXE = File.join(Config::CONFIG["bindir"],
-                     Config::CONFIG["RUBY_INSTALL_NAME"] +
-                     Config::CONFIG["EXEEXT"])
+RUBY_EXE = File.join(RbConfig::CONFIG["bindir"],
+                     RbConfig::CONFIG["RUBY_INSTALL_NAME"] +
+                     RbConfig::CONFIG["EXEEXT"])
 
 task :default => :build
 
