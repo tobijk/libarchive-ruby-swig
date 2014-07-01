@@ -22,6 +22,10 @@
 #include "error.h"
 %}
 
+%init %{
+    Error::init();
+%}
+
 %wrapper %{
 /* --- WRAPPER CODE START --- */
 %}

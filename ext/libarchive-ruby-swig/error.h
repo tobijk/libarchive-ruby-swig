@@ -11,6 +11,9 @@
 #ifndef CLASS_ARCHIVE_ERROR_H_INCLUDED
 #define CLASS_ARCHIVE_ERROR_H_INCLUDED
 
+/* NOTE: This file is not interpreted by SWIG */
+
+#include <string>
 #include <exception>
 
 class Error: public std::exception
@@ -26,6 +29,9 @@ class Error: public std::exception
         virtual const char *what() const throw() {
             return error_msg.c_str();
         }
+
+        static void init() throw();
+        static void ruby_raise(const Error &err) throw();
 
     private:
 

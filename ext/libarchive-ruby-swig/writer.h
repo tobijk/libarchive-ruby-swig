@@ -65,11 +65,7 @@ class Writer
     try {
         $action
     } catch(Error &err) {
-        static VALUE c_archive = rb_define_module("Archive");
-        static VALUE e_archive =
-            rb_define_class_under(c_archive, "Error", rb_eStandardError);
-        VALUE o_except = rb_exc_new2(e_archive, err.what());
-        rb_exc_raise(o_except);
+        Error::ruby_raise(err);
     }
 }
 #endif
