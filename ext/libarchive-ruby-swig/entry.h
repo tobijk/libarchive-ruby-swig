@@ -282,6 +282,7 @@ class Entry
         $action
     } catch(Error &err) {
         Error::ruby_raise(err);
+        SWIG_fail;
     }
 }
 #endif

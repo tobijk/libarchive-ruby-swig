@@ -36,7 +36,7 @@ Reader::~Reader()
 void Reader::close()
 {
     if(_ar) {
-        archive_read_finish(_ar);
+        archive_read_free(_ar);
         _ar = 0;
     }
 
@@ -53,10 +53,10 @@ Reader *Reader::read_open_filename(const char *filename, const char *cmd, bool r
 
     try {
         if(cmd) {
-            if(archive_read_support_compression_program(ar, cmd) != ARCHIVE_OK)
+            if(archive_read_support_filter_program(ar, cmd) != ARCHIVE_OK)
                 throw 0;
         } else {
-            if(archive_read_support_compression_all(ar) != ARCHIVE_OK)
+            if(archive_read_support_filter_all(ar) != ARCHIVE_OK)
                 throw 0;
         }
 
@@ -73,7 +73,7 @@ Reader *Reader::read_open_filename(const char *filename, const char *cmd, bool r
 
     } catch(...) {
         std::string error_msg = archive_error_string(ar);
-        archive_read_finish(ar);
+        archive_read_free(ar);
         throw Error(error_msg);
     }
 
@@ -90,10 +90,10 @@ Reader *Reader::read_open_memory(const char *string, int length,
 
     try {
         if(cmd) {
-            if(archive_read_support_compression_program(ar, cmd) != ARCHIVE_OK)
+            if(archive_read_support_filter_program(ar, cmd) != ARCHIVE_OK)
                 throw 0;
         } else {
-            if(archive_read_support_compression_all(ar) != ARCHIVE_OK)
+            if(archive_read_support_filter_all(ar) != ARCHIVE_OK)
                 throw 0;
         }
 
@@ -110,7 +110,7 @@ Reader *Reader::read_open_memory(const char *string, int length,
 
     } catch(...) {
         std::string error_msg = archive_error_string(ar);
-        archive_read_finish(ar);
+        archive_read_free(ar);
         free(content);
         throw Error(error_msg);
     }

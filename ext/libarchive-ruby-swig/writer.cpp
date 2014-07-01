@@ -35,7 +35,7 @@ Writer::~Writer()
 void Writer::close()
 {
     if(_ar) {
-        archive_write_finish(_ar);
+        archive_write_free(_ar);
         _ar = 0;
     }
 }
@@ -48,7 +48,7 @@ Writer *Writer::write_open_filename(const char *filename,
     std::string error_msg;
     struct archive *ar = archive_write_new();
 
-    archive_write_set_compression_program(ar, cmd);
+    archive_write_add_filter_program(ar, cmd);
     try {
         set_format_helper(ar, format);
 
@@ -58,7 +58,7 @@ Writer *Writer::write_open_filename(const char *filename,
         }
 
     } catch(...) {
-        archive_write_finish(ar);
+        archive_write_free(ar);
         throw;
     }
 
@@ -76,22 +76,22 @@ Writer *Writer::write_open_filename(const char *filename,
 
         switch(compression) {
             case Archive::COMPRESSION_BZIP2:
-                archive_write_set_compression_bzip2(ar);
+                archive_write_add_filter_bzip2(ar);
                 break;
             case Archive::COMPRESSION_COMPRESS:
-                archive_write_set_compression_compress(ar);
+                archive_write_add_filter_compress(ar);
                 break;
             case Archive::COMPRESSION_GZIP:
-                archive_write_set_compression_gzip(ar);
+                archive_write_add_filter_gzip(ar);
                 break;
             case Archive::COMPRESSION_LZMA:
-                archive_write_set_compression_lzma(ar);
+                archive_write_add_filter_lzma(ar);
                 break;
             case Archive::COMPRESSION_NONE:
-                archive_write_set_compression_none(ar);
+                archive_write_add_filter_none(ar);
                 break;
             case Archive::COMPRESSION_XZ:
-                archive_write_set_compression_xz(ar);
+                archive_write_add_filter_xz(ar);
                 break;
             default:
                 error_msg = "unknown or unsupported compression scheme";
@@ -106,7 +106,7 @@ Writer *Writer::write_open_filename(const char *filename,
         }
 
     } catch(...) {
-        archive_write_finish(ar);
+        archive_write_free(ar);
         throw;
     }
 
