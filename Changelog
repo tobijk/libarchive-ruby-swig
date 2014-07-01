@@ -1,5 +1,11 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 01 Jul 2014 - 23:55:00 +0300 - Tobias Koch <tobias.koch@gmail.com>
+
+* silence deprecation warnings and work around a swig wrapper bug
+* store reference to archive error class on init
+* (Joe Damato) Fix memory corruption that can occur during a Ruby GC run.
+
 == 12 Dec 2012 - 00:42:00 +0200 - Tobias Koch <tobias.koch@gmail.com>
 
 * ts_write.rb: don't assume Dir.glob returns sorted listing
