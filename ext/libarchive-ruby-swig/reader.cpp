@@ -86,6 +86,18 @@ Reader *Reader::read_open_memory(const char *string, size_t length,
 {
     struct archive *ar = archive_read_new();
     char *content = (char*) malloc(length);
+
+    if (!ar) {
+        std::string error_msg = archive_error_string(ar);
+        archive_read_free(ar);
+        throw Error(error_msg);
+    }
+
+    if (!content) {
+        archive_read_free(ar);
+        throw Error("Unable to allocate memory when duplicating buffer");
+    }
+
     memcpy((void*) content, (void*) string, length);
 
     try {
