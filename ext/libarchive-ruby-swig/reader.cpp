@@ -88,9 +88,7 @@ Reader *Reader::read_open_memory(const char *string, size_t length,
     char *content = (char*) malloc(length);
 
     if (!ar) {
-        std::string error_msg = archive_error_string(ar);
-        archive_read_free(ar);
-        throw Error(error_msg);
+        throw Error("Unable to allocte libarchive handle!");
     }
 
     if (!content) {
