@@ -81,7 +81,7 @@ Reader *Reader::read_open_filename(const char *filename, const char *cmd, bool r
 }
 
 
-Reader *Reader::read_open_memory(const char *string, int length,
+Reader *Reader::read_open_memory(const char *string, size_t length,
     const char *cmd, bool raw)
 {
     struct archive *ar = archive_read_new();
@@ -150,7 +150,7 @@ Entry *Reader::next_header()
 }
 
 
-VALUE Reader::read_data_helper(int len)
+VALUE Reader::read_data_helper(size_t len)
 {
     std::string error_msg = "error while reading from archive";
 

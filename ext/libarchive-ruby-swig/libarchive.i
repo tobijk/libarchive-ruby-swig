@@ -30,7 +30,7 @@
 /* --- WRAPPER CODE START --- */
 %}
 
-%apply (char *STRING, int LENGTH) { (const char *string, int length) };
+%apply (char *STRING, size_t LENGTH) { (const char *string, size_t length) };
 
 %include "stat.h"
 %include "reader.h"

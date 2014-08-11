@@ -17,18 +17,13 @@
 #include "error.h"
 
 Writer::Writer(struct archive *ar)
-    :_ar(ar),
-    _buf(0),
-    _buf_size(0)
+    :_ar(ar)
 {}
 
 
 Writer::~Writer()
 {
     this->close();
-    free(_buf);
-    _buf = 0;
-    _buf_size = 0;
 }
 
 
@@ -139,7 +134,7 @@ void Writer::write_header(Entry *entry)
 }
 
 
-void Writer::write_data_helper(const char *string, int length)
+void Writer::write_data_helper(const char *string, size_t length)
 {
     if(archive_write_data(_ar, (void*) string, length) == -1) {
         std::string error_msg = archive_error_string(_ar);

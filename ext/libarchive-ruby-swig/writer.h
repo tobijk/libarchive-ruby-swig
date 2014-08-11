@@ -90,7 +90,7 @@ class Writer
         #endif
         void write_header(Entry *entry);
 
-        void write_data_helper(const char *string, int length);
+        void write_data_helper(const char *string, size_t length);
 
 #ifdef SWIG
 %exception;
@@ -106,8 +106,6 @@ class Writer
         static void set_format_helper(struct archive *ar, int format);
 
         struct archive *_ar;
-        char *_buf;
-        int _buf_size;
 
         std::map<unsigned long, std::map<unsigned long, std::string> > _hardlinks;
 };
