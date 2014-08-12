@@ -85,11 +85,12 @@ Reader *Reader::read_open_memory(const char *string, size_t length,
     const char *cmd, bool raw)
 {
     struct archive *ar = archive_read_new();
-    char *content = (char*) malloc(length);
 
     if (!ar) {
-        throw Error("Unable to allocte libarchive handle!");
+        throw Error("Unable to allocate libarchive handle!");
     }
+
+    char *content = (char*) malloc(length);
 
     if (!content) {
         archive_read_free(ar);
