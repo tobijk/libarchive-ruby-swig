@@ -1,5 +1,11 @@
 = Changelog for Libarchive/Ruby/SWIG
 
+== 12 Aug 2014 - 22:33:00 +0300 - Tobias Koch <tobias.koch@gmail.com>
+
+* Fix error message when archive handle isnt allocated and fix cast (Joe Damato)
+* Check return values of malloc and archive_read_new (Joe Damato)
+* Fix int type bugs and remove unused buf from writer (Joe Damato)
+
 == 01 Jul 2014 - 23:55:00 +0300 - Tobias Koch <tobias.koch@gmail.com>
 
 * silence deprecation warnings and work around a swig wrapper bug
