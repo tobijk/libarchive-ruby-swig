@@ -55,7 +55,7 @@ class Reader
             const char *cmd = 0, bool raw = false);
 
         Entry *next_header();
-        VALUE read_data_helper(int len);
+        VALUE read_data_helper(size_t len);
 
 #ifdef SWIG
 %exception;
@@ -64,7 +64,7 @@ class Reader
     private:
         struct archive *_ar;
         char *_buf;
-        int _buf_size;
+        size_t _buf_size;
         char *_archive_content;
 };
 

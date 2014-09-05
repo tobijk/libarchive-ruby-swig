@@ -149,8 +149,7 @@ Entry *Reader::next_header()
     return result;
 }
 
-
-VALUE Reader::read_data_helper(int len)
+VALUE Reader::read_data_helper(size_t len)
 {
     std::string error_msg = "error while reading from archive";
 
