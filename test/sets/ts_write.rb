@@ -53,7 +53,7 @@ class TS_WriteArchive < Test::Unit::TestCase
         ar.write_header(entry)
 
         if entry.file?
-          open(fn) do |f|
+          File.open(fn, 'rb') do |f|
             ar.write_data { f.read(1024) }
           end
         end
