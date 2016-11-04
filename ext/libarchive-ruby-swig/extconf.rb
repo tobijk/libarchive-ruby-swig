@@ -10,6 +10,9 @@
 
 require 'mkmf'
 
+RbConfig::MAKEFILE_CONFIG['CC']  = ENV['CC']  if ENV['CC']
+RbConfig::MAKEFILE_CONFIG['CXX'] = ENV['CXX'] if ENV['CXX']
+
 unless have_header('archive.h') && \
   have_library('archive', 'archive_read_open_filename') &&
   have_library('archive', 'archive_read_support_format_raw')
@@ -17,7 +20,7 @@ unless have_header('archive.h') && \
   exit 1
 end
 
-if find_executable('g++')
+if find_executable('g++') or find_executable('clang++')
   $libs = append_library($libs, "stdc++")
 end
 
